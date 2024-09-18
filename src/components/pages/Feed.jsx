@@ -7,13 +7,12 @@ import Navbar from "../NavBar";
 import StatusCard from "../StatusCard";
 import StatusForm from "../forms/StatusForm";
 
-const socket = io(import.meta.env.VITE_REACT_APP_SOCKET_URL);
-
 function Feed() {
   const [statuses, setStatuses] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const [socket, setSocket] = useState(null); // Initialize socket state
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -38,13 +37,19 @@ function Feed() {
     }
   };
 
+  // Initialize the socket inside useEffect
   useEffect(() => {
-    socket.on("postCreated", (newPost) => {
+    const newSocket = io(import.meta.env.VITE_REACT_APP_SOCKET_URL);
+    setSocket(newSocket);
+
+    // Listen for post creation events
+    newSocket.on("postCreated", (newPost) => {
       setStatuses((prevStatuses) => [newPost, ...prevStatuses]);
     });
 
     return () => {
-      socket.off("postCreated");
+      // Clean up the socket connection
+      newSocket.disconnect();
     };
   }, []);
 
