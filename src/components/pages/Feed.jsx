@@ -44,7 +44,7 @@ function Feed() {
 
     // Listen for post creation events
     newSocket.on("postCreated", (newPost) => {
-      setStatuses((prevStatuses) => [newPost, ...prevStatuses]);
+      setStatuses((prevStatuses) => [...prevStatuses, newPost]);
     });
 
     return () => {
