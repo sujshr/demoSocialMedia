@@ -39,9 +39,10 @@ function Feed() {
 
   // Initialize the socket inside useEffect
   useEffect(() => {
-    const newSocket = io(import.meta.env.VITE_REACT_APP_SOCKET_URL);
-    setSocket(newSocket);
-
+    const newSocket = io(import.meta.env.VITE_REACT_APP_SOCKET_URL, {
+      transports: ["websocket"], // Only allow WebSocket
+      upgrade: false, // Prevents the client from attempting a fallback
+    });
     // Listen for post creation events
     newSocket.on("postCreated", (newPost) => {
       setStatuses((prevStatuses) => [newPost, ...prevStatuses]);
