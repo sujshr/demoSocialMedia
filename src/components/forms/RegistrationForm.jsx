@@ -119,7 +119,7 @@ function RegistrationForm() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel className="text-black">Username</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -139,7 +139,7 @@ function RegistrationForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-black">Password</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -160,7 +160,7 @@ function RegistrationForm() {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel className="text-black">Confirm Password</FormLabel>
                   <FormControl>
                     <Input
                       {...field}

@@ -107,7 +107,9 @@ function LoginForm() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username or Email</FormLabel>
+                  <FormLabel className="text-black">
+                    Username or Email
+                  </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -127,7 +129,7 @@ function LoginForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-black">Password</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
