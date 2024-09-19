@@ -12,17 +12,17 @@ import {
 function SuccessAlert({ success, path }) {
   const getTitleAndDescription = (path) => {
     switch (path) {
-      case "Feed":
+      case "FeedL":
         return {
           title: "Login Successful",
           description: "Navigate to your feed.",
           to: "/feed",
         };
-      case "Login":
+      case "FeedR":
         return {
           title: "Registered Successfully!!",
-          description: "Please log in.",
-          to: "/login",
+          description: "Navigate to your feed.",
+          to: "/feed",
         };
       default:
         return {

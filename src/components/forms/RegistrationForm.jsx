@@ -67,10 +67,11 @@ function RegistrationForm() {
     console.log("called");
     setIsLoading(true);
     try {
-      await axios.post(
+      const res = await axios.post(
         import.meta.env.VITE_REACT_APP_USER_REGISTRATION_URL,
         data
       );
+      document.cookie = `token=${res.data.token}; path=/`;
       setSuccess(true);
     } catch (error) {
       console.log(error);
@@ -93,7 +94,7 @@ function RegistrationForm() {
           Home
         </Button>
       </Link>{" "}
-      <SuccessAlert success={success} path={"Login"} />
+      <SuccessAlert success={success} path={"FeedR"} />
       {isLoading && <ActionLoader action={"Registering..."} />}
       <CardHeader className="text-center">
         <h2 className="text-3xl font-extrabold text-gray-800 mb-2">

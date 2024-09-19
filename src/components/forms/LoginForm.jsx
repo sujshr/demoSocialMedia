@@ -81,7 +81,7 @@ function LoginForm() {
           Home
         </Button>
       </Link>
-      <SuccessAlert success={success} path={"Feed"} />
+      <SuccessAlert success={success} path={"FeedL"} />
       {isLoading && <ActionLoader action={"Logging in..."} />}
       <CardHeader className="text-center">
         <h2 className="text-3xl font-extrabold text-gray-800 mb-2">
