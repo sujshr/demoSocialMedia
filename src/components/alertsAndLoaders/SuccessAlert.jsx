@@ -44,7 +44,7 @@ function SuccessAlert({ success, path }) {
         </AlertDialogHeader>
         <AlertDialogFooter className=" w-full flex items-end">
           <Link to={to}>
-            <AlertDialogAction>{path}</AlertDialogAction>
+            <AlertDialogAction>Feed</AlertDialogAction>
           </Link>
         </AlertDialogFooter>
       </AlertDialogContent>
