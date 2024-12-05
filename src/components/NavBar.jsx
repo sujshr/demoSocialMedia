@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ArrowLeft } from "lucide-react";
+import avatar from "../assets/avatar.jpeg";
 
 const Navbar = ({ handleOpenForm }) => {
   const [showNavbar, setShowNavbar] = useState(true);
@@ -26,31 +28,40 @@ const Navbar = ({ handleOpenForm }) => {
 
   return (
     <nav
-      className={`z-10 fixed cursor-auto top-0 w-full max-w-[600px] bg-gradient-to-b from-white via-gray-100 to-gray-200 text-gray-800 transition-transform duration-300 ease-in-out ${
-        showNavbar ? "translate-y-0" : "-translate-y-full"
-      }`}
+      className={`
+        fixed top-0 left-0 right-0 z-50 
+        bg-gray-900 border-b border-gray-700
+        transition-transform duration-300
+        ${showNavbar ? "translate-y-0" : "-translate-y-full"}
+      `}
     >
-      <div className="container mx-auto flex items-center justify-end gap-6 h-16 px-4">
-        <Button
-          type="submit"
-          className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-          onClick={() => {
-            handleOpenForm();
-          }}
-        >
-          Post
-        </Button>
-        <NavLink to={"/profile"}>
-          <div className="flex items-center gap-4">
-            <Avatar>
-              <AvatarImage
-                src="https://github.com/shadcn.png"
-                alt="User Avatar"
-              />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </div>
-        </NavLink>
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <NavLink to="/" className="text-2xl font-bold text-blue-500">
+            <Button className="px-6 py-3 rounded-full bg-gray-800 hover:bg-gray-700 text-gray-100 font-medium border border-gray-700 hover:border-gray-600 transition-all duration-300 flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" /> Home
+            </Button>
+          </NavLink>
+        </div>
+
+        <div className="flex items-center space-x-4">
+          <Button
+            onClick={handleOpenForm}
+            variant="outline"
+            className="mr-4 text-gray-700 transition-colors"
+          >
+            Post
+          </Button>
+
+          <NavLink to={"/profile"}>
+            <div className="flex items-center space-x-2">
+              <Avatar>
+                <AvatarImage src={avatar} alt={`avatar`} />
+                <AvatarFallback>HI</AvatarFallback>
+              </Avatar>
+            </div>
+          </NavLink>
+        </div>
       </div>
     </nav>
   );

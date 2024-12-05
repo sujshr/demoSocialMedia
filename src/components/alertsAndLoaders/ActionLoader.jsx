@@ -1,37 +1,13 @@
 function ActionLoader({ action }) {
   return (
-    <div>
-      <style>
-        {`
-          .action-loader-bg {
-            backdrop-filter: blur(5px);
-          }
-          
-          .action-loader {
-            width: 60px;
-            aspect-ratio: 2;
-            --_g: no-repeat radial-gradient(circle closest-side, #8A2BE2 90%, #0000);
-            background: 
-              var(--_g) 0%   50%,
-              var(--_g) 50%  50%,
-              var(--_g) 100% 50%;
-            background-size: calc(100%/3) 50%;
-            animation: l3 1s infinite linear;
-          }
-          
-          @keyframes l3 {
-            20% { background-position: 0%   0%, 50%  50%, 100%  50%; }
-            40% { background-position: 0% 100%, 50%   0%, 100%  50%; }
-            60% { background-position: 0%  50%, 50% 100%, 100%   0%; }
-            80% { background-position: 0%  50%, 50%  50%, 100% 100%; }
-          }
-        `}
-      </style>
-      <div className="absolute top-0 left-0 w-full h-full bg-opacity-50 backdrop-filter backdrop-blur-sm flex items-center justify-center z-50 rounded-md">
-        <div className="flex flex-col items-center space-y-4 p-8 rounded-[30px] bg-stone-950 bg-opacity-90">
-          <div className="action-loader"></div>
-          <div className="text-white text-xl font-bold">{action}</div>
+    <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="bg-gray-800/90 backdrop-blur-lg border border-gray-700/50 rounded-2xl p-8 flex flex-col items-center space-y-4 max-w-[90vw]">
+        <div className="relative">
+          <div className="w-16 h-16 rounded-full border-4 border-t-blue-500 border-r-purple-500 border-b-blue-500 border-l-purple-500 animate-spin" />
+          <div className="absolute inset-2 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-600/20 backdrop-blur-sm" />
+          <div className="absolute inset-[30%] rounded-full bg-gradient-to-r from-blue-500 to-purple-600" />
         </div>
+        <span className="text-lg font-medium text-gray-100">{action}</span>
       </div>
     </div>
   );

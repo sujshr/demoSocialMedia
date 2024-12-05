@@ -1,10 +1,15 @@
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { format } from "date-fns";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
+import { format } from "date-fns";
+import image from "../assets/avatar.jpeg";
 const highlightHashtags = (text) => {
   const regex = /#(\w+)/g;
-  return text.split(regex).map((part, index) =>
+  return text?.split(regex).map((part, index) =>
     index % 2 === 1 ? (
       <span key={index} className="text-blue-400">
         #{part}
@@ -15,12 +20,13 @@ const highlightHashtags = (text) => {
   );
 };
 
-function StatusCard({ postedBy, createdAt, status }) {
+function StatusCard({ postedBy, createdAt, status, imageUrl }) {
+  console.log(createdAt)
   const formattedTime = format(new Date(createdAt), "MMM d, yyyy h:mm a");
 
   return (
-    <Card className="my-4 p-6 w-full border rounded-md cursor-auto ">
-      <CardTitle className="text-lg font-semibold mb-6">
+    <Card className="my-4 border rounded-md bg-gray-900 text-white border-gray-700">
+      <CardHeader>
         <div className="flex gap-4 items-center">
           <Avatar>
             <AvatarImage
@@ -30,15 +36,21 @@ function StatusCard({ postedBy, createdAt, status }) {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="flex flex-col items-start">
-            <p>{postedBy}</p>
-            <p>
-              <p className="text-sm text-gray-400">{formattedTime}</p>
-            </p>
+            <CardTitle>{postedBy}</CardTitle>
+            <p className="text-sm text-gray-400">{formattedTime}</p>
           </div>
         </div>
-      </CardTitle>
+      </CardHeader>
 
-      <p className="mt-2 text-left font-medium">{highlightHashtags(status)}</p>
+      <CardContent>
+        <p className="font-medium text-left">{highlightHashtags(status)}</p>
+      </CardContent>
+
+      {image && (
+        <CardContent>
+          <img src={imageUrl} alt="Post Media" className="w-full rounded-md" />
+        </CardContent>
+      )}
     </Card>
   );
 }

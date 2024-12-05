@@ -3,12 +3,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,9 +20,9 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
-
-import SuccessAlert from "../alertsAndLoaders/SuccessAlert";
+import { ArrowLeft, User, Lock } from "lucide-react";
 import ActionLoader from "../alertsAndLoaders/ActionLoader";
+import SuccessAlert from "../alertsAndLoaders/SuccessAlert";
 
 const formSchema = z.object({
   username: z.string().min(1, { message: "Enter your username or email" }),
@@ -72,94 +70,105 @@ function LoginForm() {
   };
 
   return (
-    <div className="relative flex flex-col w-[90vw] max-w-[500px] mx-auto my-8 bg-gradient-to-r from-blue-50 to-purple-50">
-      <Link to="/">
-        <Button
-          type="submit"
-          className="fixed top-8 right-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-lg hover:shadow-xl transition-shadow duration-300"
-        >
-          Home
+    <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      <Link to="/" className="fixed top-8 left-8 z-10">
+        <Button className="px-6 py-3 rounded-full bg-gray-800 hover:bg-gray-700 text-gray-100 font-medium border border-gray-700 hover:border-gray-600 transition-all duration-300 flex items-center gap-2">
+          <ArrowLeft className="w-4 h-4" /> Home
         </Button>
       </Link>
+
       <SuccessAlert success={success} path={"FeedL"} />
       {isLoading && <ActionLoader action={"Logging in..."} />}
-      <CardHeader className="text-center">
-        <h2 className="text-3xl font-extrabold text-gray-800 mb-2">
-          Welcome Back
-        </h2>
-        <CardDescription className="text-gray-500">
-          Log in to contunue!
-        </CardDescription>
-        {errorMessage && (
-          <h2 className="text-lg font-bold text-red-500 mt-4">
-            {errorMessage}
+
+      <div className="w-full max-w-md bg-gray-800/50 backdrop-blur-lg border border-gray-700/50 rounded-2xl shadow-xl p-8 relative z-10">
+        <CardHeader className="text-center p-0 mb-6">
+          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <User className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-100 mb-2">
+            Welcome Back
           </h2>
-        )}
-      </CardHeader>
-      <CardContent className="mt-6">
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleFormSubmit)}
-            className="grid grid-cols-1 gap-6"
-          >
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-black">
-                    Username or Email
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      className="text-black p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-300"
-                    />
-                  </FormControl>
-                  <FormDescription className="text-sm text-gray-500">
-                    Enter your registered username or email.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <CardDescription className="text-gray-400">
+            Log in to your account to continue
+          </CardDescription>
+          {errorMessage && (
+            <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+              <p className="text-red-400 text-sm font-medium">{errorMessage}</p>
+            </div>
+          )}
+        </CardHeader>
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-black">Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type="password"
-                      className="text-black p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-300"
-                    />
-                  </FormControl>
-                  <FormDescription className="text-sm text-gray-500">
-                    Enter your password.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button
-              type="submit"
-              className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-lg hover:shadow-xl transition-shadow duration-300"
+        <CardContent className="p-0">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleFormSubmit)}
+              className="space-y-6"
             >
-              Log In
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-      <CardFooter className="self-center mt-4 text-gray-600">
-        Don't have an account?{" "}
-        <Link to="/register" className="text-blue-600 hover:underline ml-2">
-          Register here
-        </Link>
-      </CardFooter>
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-200">Username</FormLabel>
+                    <FormControl>
+                      <div className="relative flex items-center">
+                        <User className="w-4 h-4 text-gray-500 absolute left-3" />
+                        <Input
+                          {...field}
+                          className="bg-gray-900/50 border-gray-700 text-gray-100 pl-10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-12"
+                          placeholder="Enter your username"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage className="text-red-400" />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-200">Password</FormLabel>
+                    <FormControl>
+                      <div className="relative flex items-center">
+                        <Lock className="w-4 h-4 text-gray-500 absolute left-3" />
+                        <Input
+                          {...field}
+                          type="password"
+                          className="bg-gray-900/50 border-gray-700 text-gray-100 pl-10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-12"
+                          placeholder="Enter your password"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage className="text-red-400" />
+                  </FormItem>
+                )}
+              />
+
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 hover:scale-105 h-12"
+              >
+                Log In
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+
+        <CardFooter className="flex justify-center mt-6 p-0">
+          <p className="text-gray-400">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="text-blue-400 hover:text-blue-300 font-medium hover:underline ml-1"
+            >
+              Sign up here
+            </Link>
+          </p>
+        </CardFooter>
+      </div>
     </div>
   );
 }
