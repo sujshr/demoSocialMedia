@@ -74,7 +74,7 @@ function Feed({ username }) {
               />
             ))
           ) : (
-            <p className="text-white">No posts available</p>
+            <p className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 font-bold -translate-y-1/2">No posts available</p>
           )}
         </div>
         <PostForm isOpen={isFormOpen} onClose={handleCloseForm} />
