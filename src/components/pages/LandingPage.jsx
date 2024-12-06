@@ -33,7 +33,7 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div className="fixed top-8 right-8 z-10">
+      <div className="absolute top-8 right-8 z-10">
         <Button
           onClick={() => {
             if (token) {
