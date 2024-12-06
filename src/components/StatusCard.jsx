@@ -1,12 +1,9 @@
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { format } from "date-fns";
+import { useState } from "react";
 import image from "../assets/avatar.jpeg";
+
 const highlightHashtags = (text) => {
   const regex = /#(\w+)/g;
   return text?.split(regex).map((part, index) =>
@@ -21,7 +18,7 @@ const highlightHashtags = (text) => {
 };
 
 function StatusCard({ postedBy, createdAt, status, imageUrl }) {
-  console.log(createdAt)
+  const [imageLoading, setImageLoading] = useState(true);
   const formattedTime = format(new Date(createdAt), "MMM d, yyyy h:mm a");
 
   return (
@@ -29,10 +26,7 @@ function StatusCard({ postedBy, createdAt, status, imageUrl }) {
       <CardHeader>
         <div className="flex gap-4 items-center">
           <Avatar>
-            <AvatarImage
-              src="https://github.com/shadcn.png"
-              alt="User Avatar"
-            />
+            <AvatarImage src={image} alt="User Avatar" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="flex flex-col items-start">
@@ -42,13 +36,25 @@ function StatusCard({ postedBy, createdAt, status, imageUrl }) {
         </div>
       </CardHeader>
 
-      <CardContent>
-        <p className="font-medium text-left">{highlightHashtags(status)}</p>
-      </CardContent>
-
-      {image && (
+      {status && (
         <CardContent>
-          <img src={imageUrl} alt="Post Media" className="w-full rounded-md" />
+          <p className="font-medium text-left">{highlightHashtags(status)}</p>
+        </CardContent>
+      )}
+
+      {imageUrl && (
+        <CardContent className="relative">
+          {imageLoading && (
+            <div className="absolute inset-0 animate-pulse bg-gray-800 rounded-md" />
+          )}
+          <img
+            src={imageUrl}
+            alt="Post Media"
+            className={`w-full rounded-md transition-opacity duration-300 ${
+              imageLoading ? "opacity-0" : "opacity-100"
+            }`}
+            onLoad={() => setImageLoading(false)}
+          />
         </CardContent>
       )}
     </Card>

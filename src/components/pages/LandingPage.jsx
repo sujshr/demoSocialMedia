@@ -13,7 +13,7 @@ const LandingPage = () => {
   };
 
   const token = getCookie("token");
-  
+
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col justify-center relative overflow-hidden">
       <div className="absolute right-0 top-1/2 -translate-y-1/2 mr-8 hidden lg:block">
@@ -57,8 +57,7 @@ const LandingPage = () => {
         </h1>
 
         <p className="text-xl text-gray-400 max-w-md mx-auto leading-relaxed mb-12">
-          Connect with friends, share moments, and join conversations in our
-          demo social space.
+          Share some moments in our demo social space.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-12 max-w-3xl mx-auto">

@@ -18,13 +18,25 @@ import {
 import ActionLoader from "../alertsAndLoaders/ActionLoader";
 import { uploadImageToFirebase } from "../../firebase";
 
-const formSchema = z.object({
-  status: z
-    .string()
-    .min(1, { message: "Status is required" })
-    .max(500, { message: "Status must be less than 500 characters" }),
-  image: z.instanceof(File).optional(),
-});
+// Modified schema to make both fields optional but require at least one
+const formSchema = z
+  .object({
+    status: z
+      .string()
+      .max(500, { message: "Status must be less than 500 characters" })
+      .optional(),
+    image: z.instanceof(File).optional(),
+  })
+  .refine(
+    (data) => {
+      // Ensure at least one field is provided
+      return data.status || data.image;
+    },
+    {
+      message: "Please provide either a status message or an image",
+      path: ["status"], // This will show the error under the status field
+    }
+  );
 
 function PostForm({ isOpen, onClose }) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -38,6 +50,7 @@ function PostForm({ isOpen, onClose }) {
     formState: { errors },
     setValue,
     reset,
+    watch,
   } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,6 +58,10 @@ function PostForm({ isOpen, onClose }) {
       image: undefined,
     },
   });
+
+  // Watch both fields to disable submit button if both are empty
+  const status = watch("status");
+  const image = watch("image");
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -101,7 +118,7 @@ function PostForm({ isOpen, onClose }) {
       await axios.post(
         import.meta.env.VITE_REACT_APP_POST_URL,
         {
-          status: data.status,
+          status: data.status || "",
           imageUrl: imageUrl,
         },
         {
@@ -130,6 +147,8 @@ function PostForm({ isOpen, onClose }) {
     onClose();
   };
 
+  const isSubmitDisabled = !status?.trim() && !image;
+
   return (
     <AlertDialog open={isOpen} onOpenChange={handleClose}>
       <AlertDialogContent className="w-[500px] max-w-[95vw] rounded-2xl bg-transparent border-none">
@@ -144,7 +163,7 @@ function PostForm({ isOpen, onClose }) {
               Create a Post
             </h2>
             <p className="text-gray-400">
-              Share your thoughts with the community
+              Share your thoughts or an image with the community
             </p>
 
             {errorMessage && (
@@ -174,7 +193,7 @@ function PostForm({ isOpen, onClose }) {
               <div className="flex items-center justify-between mb-2">
                 <label className="text-gray-200 flex items-center gap-2">
                   <Image className="w-5 h-5 text-gray-500" />
-                  Wanna share an image?
+                  Share an image
                 </label>
                 <input
                   type="file"
@@ -220,7 +239,8 @@ function PostForm({ isOpen, onClose }) {
               </AlertDialogCancel>
               <Button
                 type="submit"
-                className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 hover:scale-105"
+                disabled={isSubmitDisabled}
+                className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
               >
                 Post
               </Button>
