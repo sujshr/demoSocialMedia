@@ -49,7 +49,7 @@ const LandingPage = () => {
         </Button>
       </div>
 
-      <main className="flex flex-col items-center justify-center text-center z-10 px-4 lg:pr-96">
+      <main className="flex mt-24 flex-col items-center justify-center text-center z-10 px-4 lg:pr-96">
         <h1 className="text-6xl sm:text-7xl font-bold mb-6">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
             Share Your Story
