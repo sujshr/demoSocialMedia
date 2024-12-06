@@ -16,7 +16,7 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col justify-center relative overflow-hidden">
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 mr-8 hidden lg:block">
+      <div className="absolute right-0 top-[55%] -translate-y-1/2 mr-8 hidden lg:block">
         <div className="w-72 bg-gray-800 rounded-lg border border-gray-700 shadow-2xl">
           <div className="p-4 border-b border-gray-700">
             <div className="flex items-center gap-3">
